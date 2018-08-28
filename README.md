@@ -20,7 +20,7 @@ No Starch Press, 2018.
 
 Notes - Found in Chapter 1 "Encryption" under the section *The Caesar Cipher*
 
-
+---
 
 Viginère Cipher:
 
@@ -29,7 +29,7 @@ No Starch Press, 2018.
 
 Notes - Found in Chapter 1 "Encryption" under the section *The Viginère Cipher*
 
-
+---
 
 Route Cipher:
 
@@ -37,8 +37,7 @@ Website - [Wikipedia - Transposition](https://en.wikipedia.org/wiki/Transpositio
 
 Notes - Found under "Route cipher" section
 
-
-
+---
 
 Monoalphabetic Cipher: 
 
@@ -46,8 +45,7 @@ Citation - Department of the Army. Basic CryptAnalysis. 1970.
 
 Notes - Found in section 1-9 "Substitution Cipher Alphabets"
 
-
-
+---
 
 Polyalphabetic Cipher: 
 
