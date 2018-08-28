@@ -188,7 +188,8 @@ class route_cipher:
                     encrypted_data += Matrix[y][x]
         return encrypted_data
 
-def poly
+def polyalphabetic_cipher:
+
 def one_time_pad(content, pad):
     """ encrypt content using the One-Time Pad method by
         taking in a key that is as long as the content then
