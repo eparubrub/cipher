@@ -2,12 +2,18 @@ import os, sys, math, argparse, os.path
 
 # cipher.py
 #
-# A command-line tool implementing simple ciphers
+# A command-line tool implementing encryption and decryption that include Caesar, Viginère, Monoalphabetic,
+# Polyalphabetic, and Route Ciphers.
 #
-# Commands:
+# Usage:
+#
+# -i: provide input file name
+# -c: encryption/decryption options (see -h for options)
+# -o: provide an output file name(optional)
 #
 # Example Usage:
 #
+# -i test.txt -o encrypted.txt -c 1
 #
 # Copyright 2018 Emmit Parubrub
 
@@ -95,39 +101,113 @@ class vig_cipher:
                     ind += 1
         return decrypted_data
 
-
-class substitution_cipher:
+class monoalphabetic_cipher:
+    key = {
+        'a': 'Z',
+        'b': 'C',
+        'c': 'F',
+        'd': 'I',
+        'e': 'L',
+        'f': 'O',
+        'g': 'R',
+        'h': 'U',
+        'i': 'X',
+        'j': 'A',
+        'k': 'D',
+        'l': 'G',
+        'm': 'J',
+        'n': 'M',
+        'o': 'P',
+        'p': 'S',
+        'q': 'V',
+        'r': 'Y',
+        's': 'B',
+        't': 'E',
+        'u': 'H',
+        'v': 'K',
+        'w': 'N',
+        'x': 'Q',
+        'y': 'T',
+        'z': 'W',
+        ' ': ' ',
+    }
     def encrypt(content):
-        """ encrypt content using the Subsitution Cipher method
-            (aka the permutation method) by replacing letters
-            with their ascii decimal numbers
+        """ encrypt content using the monoalphabetic cipher
+            using a python dictionary. We first make a library
+            with the key 1 to 1 pairs and add the key alphabets
+            to the encrypted data that is returned
         """
         encrypted_data = ""
         for i in content:
-            if (chr(ord(i))) == ' ':
-                encrypted_data += ' '
-            else:
-                encrypted_data += str((ord(i)))
-                encrypted_data += '_'
+            encrypted_data += monoalphabetic_cipher.key[i]
         return encrypted_data
 
     def decrypt(content):
-        """ encrypt content using a reverse Subsitution Cipher method
-            where it reads in numbers as ascii values then turns them
-            to characters based on the '_' character that separates
-            each encoded character
+        """ decrypt the data by first reversing the key and
+            using that key to convert the encrypted text to
+            a decrypted text
         """
-        decrypted_data = ""
-        temp_str = ""
+        encrypted_data = ""
+        reverse_key = {}
+        for key, value in monoalphabetic_cipher.key.items():
+            reverse_key[value] = key
         for i in content:
-            if i == ' ':
-                decrypted_data += ' '
-            elif i == '_':
-                decrypted_data += chr(int(temp_str))
-                temp_str = ""
-            else:
-                temp_str += i
-        return decrypted_data
+            encrypted_data += reverse_key[i]
+        return encrypted_data
+
+class polyalphabetic_cipher:
+    key = {
+        'a':  u'\u3063',
+        'b': 'C',
+        'c': 'F',
+        'd':  u'\u042E',
+        'e': 'L',
+        'f': 'O',
+        'g':  u'\u3077',
+        'h':  u'\u0419',
+        'i':  u'\u3071',
+        'j':  u'\u042B',
+        'k': 'D',
+        'l':  u'\u0240',
+        'm': 'J',
+        'n': 'M',
+        'o':  u'\u308D',
+        'p':  u'\u0416',
+        'q': 'V',
+        'r':  u'\u307B',
+        's': 'B',
+        't':  u'\u0424',
+        'u': 'H',
+        'v':  u'\u3091',
+        'w': 'N',
+        'x':  u'\u3092',
+        'y':  u'\u0426',
+        'z': 'W',
+        ' ': ' ',
+    }
+    def encrypt(content):
+        """ encrypt content using the polyalphabetic cipher
+            using a python dictionary. We first make a library
+            with the key 1 to 1 pairs with American, Japanese,
+            and Russian characters using unicode
+        """
+        encrypted_data = ""
+        for i in content:
+            encrypted_data += polyalphabetic_cipher.key[i]
+        return encrypted_data
+
+    def decrypt(content):
+        """ decrypt the data by first reversing the key and
+            using that key to convert the encrypted text to
+            a decrypted text
+        """
+        encrypted_data = ""
+        reverse_key = {}
+        for key, value in polyalphabetic_cipher.key.items():
+            reverse_key[value] = key
+        for i in content:
+            encrypted_data += reverse_key[i]
+        return encrypted_data
 
 class route_cipher:
     def encrypt(content):
@@ -188,23 +268,6 @@ class route_cipher:
                     encrypted_data += Matrix[y][x]
         return encrypted_data
 
-def polyalphabetic_cipher:
-
-def one_time_pad(content, pad):
-    """ encrypt content using the One-Time Pad method by
-        taking in a key that is as long as the content then
-        shifting their ascii numbers by each ascii number
-        representation in the key
-    """
-    print("not ready yet")
-    # encrypted_data = ""
-    # for i in content:
-    #     if (chr(ord(i))) == ' ':
-    #         encrypted_data += ' '
-    #     else:
-    #         encrypted_data += (chr(ord(i) + 3))
-    # return encrypted_data
-
 # prints all encryption tests
 def print_tests(input_file_name, output_file_name):
 
@@ -231,11 +294,19 @@ def print_tests(input_file_name, output_file_name):
 
     print('')
 
-    output_file_content = substitution_cipher.encrypt(input_file_content)
+    output_file_content = monoalphabetic_cipher.encrypt(input_file_content)
     print('substitution cipher content: ', output_file_content)
 
-    d_output_file_content = substitution_cipher.decrypt(output_file_content)
+    d_output_file_content = monoalphabetic_cipher.decrypt(output_file_content)
     print('decrypted substitution cipher: ', d_output_file_content)
+
+    print('')
+
+    output_file_content = polyalphabetic_cipher.encrypt(input_file_content)
+    print('polyalphabetic cipher content: ', output_file_content)
+
+    d_output_file_content = polyalphabetic_cipher.decrypt(output_file_content)
+    print('decrypted polyalphabetic cipher: ', d_output_file_content)
 
     print('')
 
@@ -246,6 +317,8 @@ def print_tests(input_file_name, output_file_name):
     print('decrypted transposition cipher: ', d_output_file_content)
 
     print('')
+
+    print("here is your checkmark: " + u'\u2713');
 
     if write_output(output_file_name, output_file_content) == 0:
         print('encryption success')
@@ -295,39 +368,81 @@ def check_args(choice, input_file_name, output_file_name,):
         exit()
 
 
-def write_content(content, input_file_name, output_file_name):
-    """ writes content out depending on whether output_file_name is
+def encrypt_write(content, input_file_name, output_file_name, cipher):
+    """ writes encrypted content out depending on whether output_file_name is
         empty or not
     """
     if output_file_name == "":
         if write_output(input_file_name, content) == 0:
-            print('encryption success: written to %s', input_file_name)
+            print('encryption success: written to', input_file_name, 'with', cipher)
         else:
             print('encryption failed')
     else:
         if write_output(output_file_name, content) == 0:
-            print('encryption success: written to %s', output_file_name)
+            print('encryption success: written to', output_file_name, 'with', cipher)
         else:
             print('encryption failed')
+
+
+
+def decrypt_write(content, input_file_name, output_file_name, cipher):
+    """ writes decrypted content out depending on whether output_file_name is
+        empty or not
+    """
+    if output_file_name == "":
+        if write_output(input_file_name, content) == 0:
+            print('decryption success: written to', input_file_name, 'with', cipher)
+        else:
+            print('decryption failed')
+    else:
+        if write_output(output_file_name, content) == 0:
+            print('decryption success: written to', output_file_name, 'with', cipher)
+        else:
+            print('decryption failed')
 
 
 def handle_args(choice, input_file_name, output_file_name,):
     if choice == 0:
         input_file_content = read_input(input_file_name)
         output_file_content = caesar_cipher.encrypt(input_file_content)
-        write_content(output_file_content, input_file_name, output_file_name)
+        encrypt_write(output_file_content, input_file_name, output_file_name, 'Caesar Cipher')
     elif choice == 1:
         input_file_content = read_input(input_file_name)
         output_file_content = vig_cipher.encrypt(input_file_content)
-        write_content(output_file_content, input_file_name, output_file_name)
+        encrypt_write(output_file_content, input_file_name, output_file_name, 'Viginère Cipher')
     elif choice == 2:
         input_file_content = read_input(input_file_name)
-        output_file_content = substitution_cipher.encrypt(input_file_content)
-        write_content(output_file_content, input_file_name, output_file_name)
-    elif choice == 1:
+        output_file_content = monoalphabetic_cipher.encrypt(input_file_content)
+        encrypt_write(output_file_content, input_file_name, output_file_name, 'Monoalphabetic Cipher')
+    elif choice == 3:
+        input_file_content = read_input(input_file_name)
+        output_file_content = polyalphabetic_cipher.encrypt(input_file_content)
+        encrypt_write(output_file_content, input_file_name, output_file_name, 'Polyalphabetic Cipher')
+    elif choice == 4:
         input_file_content = read_input(input_file_name)
         output_file_content = route_cipher.encrypt(input_file_content)
-        write_content(output_file_content, input_file_name, output_file_name)
+        encrypt_write(output_file_content, input_file_name, output_file_name, 'Route Cipher')
+    elif choice == 5:
+        input_file_content = read_input(input_file_name)
+        output_file_content = caesar_cipher.decrypt(input_file_content)
+        decrypt_write(output_file_content, input_file_name, output_file_name, 'Caesar Cipher')
+    elif choice == 6:
+        input_file_content = read_input(input_file_name)
+        output_file_content = vig_cipher.decrypt(input_file_content)
+        decrypt_write(output_file_content, input_file_name, output_file_name, 'Viginère Cipher')
+    elif choice == 7:
+        input_file_content = read_input(input_file_name)
+        output_file_content = monoalphabetic_cipher.decrypt(input_file_content)
+        decrypt_write(output_file_content, input_file_name, output_file_name, 'Monoalphabetic Cipher')
+    elif choice == 8:
+        input_file_content = read_input(input_file_name)
+        output_file_content = polyalphabetic_cipher.decrypt(input_file_content)
+        decrypt_write(output_file_content, input_file_name, output_file_name, 'Polyalphabetic Cipher')
+    elif choice == 9:
+        input_file_content = read_input(input_file_name)
+        output_file_content = route_cipher.decrypt(input_file_content)
+        decrypt_write(output_file_content, input_file_name, output_file_name, 'Route Cipher')
+
 
 
 def main():
@@ -337,7 +452,10 @@ def main():
     choice = args.choice_v
     check_args(choice, input_file_name, output_file_name)
     handle_args(choice, input_file_name, output_file_name)
-    print_tests(input_file_name, output_file_name)
+
+    #uncomment below to run tests
+    #print_tests(input_file_name, output_file_name)
+
 
 
 if __name__ == '__main__':
