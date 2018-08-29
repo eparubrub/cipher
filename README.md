@@ -5,10 +5,12 @@ spaces.
 
 ## Usage
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+-i: provide input file name
+-c: encryption/decryption options (see -h for options)
+-o: provide an output file name(optional)
 
 ```
-Give examples
+ Example: -i test.txt -o encrypted.txt -c 1
 ```
 
 ## Cipher References
