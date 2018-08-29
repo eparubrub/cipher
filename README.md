@@ -1,7 +1,7 @@
 # Simple Cipher Program
 
 This program provides simple encryption/decryption for provided files that use characters from the American alphabet and
-spaces.
+spaces. The program also includes the following libraries: os, os.path, sys, math, argparse
 
 ## Usage
 
