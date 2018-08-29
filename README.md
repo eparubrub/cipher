@@ -5,9 +5,9 @@ spaces.
 
 ## Usage
 
--i: provide input file name
--c: encryption/decryption options (see -h for options)
--o: provide an output file name(optional)
+⋅⋅⋅-i: provide input file name
+⋅⋅⋅-c: encryption/decryption options (see -h for options)
+⋅⋅⋅-o: provide an output file name(optional)
 
 ```
  Example: -i test.txt -o encrypted.txt -c 1
