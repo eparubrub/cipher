@@ -41,6 +41,8 @@ def write_output(output_file_name, output_content):
     output_file.close()
     return 0
 
+
+
 class caesar_cipher:
     def encrypt(content):
         """ encrypt content using the Caesar Cipher method by applying
@@ -64,6 +66,7 @@ class caesar_cipher:
             else:
                 decrypted_data += (chr(ord(i) - 3))
         return decrypted_data
+
 
 
 class vig_cipher:
@@ -100,6 +103,8 @@ class vig_cipher:
                 else:
                     ind += 1
         return decrypted_data
+
+
 
 class monoalphabetic_cipher:
     key = {
@@ -155,6 +160,8 @@ class monoalphabetic_cipher:
             encrypted_data += reverse_key[i]
         return encrypted_data
 
+
+
 class polyalphabetic_cipher:
     key = {
         'a':  u'\u3063',
@@ -208,6 +215,8 @@ class polyalphabetic_cipher:
         for i in content:
             encrypted_data += reverse_key[i]
         return encrypted_data
+
+
 
 class route_cipher:
     def encrypt(content):
@@ -267,6 +276,8 @@ class route_cipher:
                 else:
                     encrypted_data += Matrix[y][x]
         return encrypted_data
+
+
 
 # prints all encryption tests
 def print_tests(input_file_name, output_file_name):
@@ -368,6 +379,7 @@ def check_args(choice, input_file_name, output_file_name,):
         exit()
 
 
+
 def encrypt_write(content, input_file_name, output_file_name, cipher):
     """ writes encrypted content out depending on whether output_file_name is
         empty or not
@@ -399,6 +411,7 @@ def decrypt_write(content, input_file_name, output_file_name, cipher):
             print('decryption success: written to', output_file_name, 'with', cipher)
         else:
             print('decryption failed')
+
 
 
 def handle_args(choice, input_file_name, output_file_name,):
